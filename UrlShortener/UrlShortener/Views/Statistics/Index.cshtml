@@ -1,0 +1,48 @@
+﻿
+@model IEnumerable<UrlShortener.Entities.ShortUrl>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h3>Short url statistics</h3>
+            <table border="1">
+                <tr class="header">
+                    <td><p>Long URL</p></td>
+                    <td><p>Short URL</p></td>
+                    <td><p>@Html.ActionLink("Creation date", "Index", new { sortOrder = ViewBag.DateSortParm })</p></td>
+                    <td><p>@Html.ActionLink("Number of clicks", "Index", new { sortOrder = ViewBag.ClicksSortParm })</p></td>
+                    <td></td>
+                </tr>
+                    @foreach (UrlShortener.Entities.ShortUrl s in Model)
+                    {
+                        <tr>
+                            <td><p><a href="@s.LongUrl" target="_blank">@s.LongUrl</a></p></td>
+                            <td><p><a href="@string.Format("{0}://{1}{2}{3}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"), s.Segment)" target="_blank">@s.Segment</a></p></td>
+                            <td><p>@s.Added</p></td>
+                            <td align="center"><p>@s.NumOfClicks</p></td>
+                            <td>
+                                <p>
+                                    @if (!string.IsNullOrEmpty(User.Identity.Name) && User.Identity.Name == s.UserName)
+                                    {
+                                        @Html.ActionLink("Delete", "Delete", new { id = s.Id })
+                                    }
+
+                                </p>
+                            </td>
+                        </tr>
+                    }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - UrlShortener</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            @if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                @: Current user:
+                @User.Identity.Name
+            }
+            <div class="navbar-header">
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li class="active">@Html.ActionLink("Generate new link", "Index", "Url")</li>
+                    <li>@Html.ActionLink("Statistics", "Index", "Statistics")</li>
+                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+
+                    @if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "Account")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Edit", "Edit", "Account")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Delete", "Delete", "Account")
+                        </li>
+                    }
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - UrlShortener</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

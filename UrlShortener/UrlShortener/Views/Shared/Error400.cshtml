@@ -1,0 +1,26 @@
+﻿
+@model System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error400</title>
+</head>
+<body>
+    <div>
+        @{
+            ViewBag.Title = "Error";
+        }
+
+        <h2>Error</h2>
+
+        <p>An unexpected error occured.</p>
+        <p>@ViewData["message"]</p>
+    </div>
+</body>
+</html>

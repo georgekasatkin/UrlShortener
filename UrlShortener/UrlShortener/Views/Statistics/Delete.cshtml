@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <div>
+        @model UrlShortener.Entities.ShortUrl
+
+        @{
+            ViewBag.Title = "Delete";
+        }
+
+        <h2>Delete</h2>
+        <p class="error">@ViewBag.ErrorMessage</p>
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <h4>Student</h4>
+            <hr />
+
+            <table>
+                <tr class="header">
+                    <td><p>Id</p></td>
+                    <td><p>Long URL</p></td>
+                    <td><p>Short URL</p></td>
+                    <td><p>Creation date</p></td>
+                    <td><p>Number of clicks</p></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><p>@Html.DisplayFor(model => model.Id)</p></td>
+                    <td><p>@Html.DisplayFor(model => model.LongUrl)</p></td>
+                    <td><p>@Html.DisplayFor(model => model.Segment)</p></td>
+                    <td><p>@Html.DisplayFor(model => model.Added)</p></td>
+                    <td><p>@Html.DisplayFor(model => model.NumOfClicks)</p></td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                <input type="submit" value="Delete" class="btn btn-default" />                          
+                <a href="/Statistics/Index">Statistics</a>
+
+            }
+        </div>
+
+    </div>
+</body>
+</html>
