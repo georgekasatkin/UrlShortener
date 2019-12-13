@@ -20,7 +20,7 @@ namespace UrlShortener.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.ClicksSortParm = String.IsNullOrEmpty(sortOrder) ? "clicks_asc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            
+
             var urls = db.ShortUrls.Select(s => s);
             switch (sortOrder)
             {
@@ -33,17 +33,17 @@ namespace UrlShortener.Controllers
                 case "date_desc":
                     urls = urls.OrderByDescending(s => s.Added);
                     break;
-                default:  
+                default:
                     urls = urls.OrderByDescending(s => s.NumOfClicks);
                     break;
             }
             return View(urls);
         }
 
-        
+
         public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
-            if (id==null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -63,17 +63,22 @@ namespace UrlShortener.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
+            string userName = UrlManager.GetUserName();
+            ShortUrl url = db.ShortUrls.Where(u => u.Id == id).FirstOrDefault();
+            if (userName != url.UserName)
+                throw new ArgumentException("Authorization check fail");
+
             try
             {
-                ShortUrl url = db.ShortUrls.Where(u => u.Id == id).FirstOrDefault();                
+
                 db.ShortUrls.Remove(url);
-                db.SaveChanges();                
+                db.SaveChanges();
             }
             catch (Exception)
-            {                
+            {
                 return RedirectToAction("Delete", new { id, saveChangesError = true });
             }
-            return RedirectToAction("Index","Statistics");
+            return RedirectToAction("Index", "Statistics");
         }
         protected override void Dispose(bool disposing)
         {
