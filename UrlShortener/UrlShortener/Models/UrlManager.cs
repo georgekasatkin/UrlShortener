@@ -129,7 +129,7 @@ namespace UrlShortener.Models
                         throw new ShortnrNotFoundException();
                     }
 
-                    url.NumOfClicks = url.NumOfClicks + 1;
+                    url.NumOfClicks++;
 
                     Stat stat = new Stat()
                     {
@@ -141,7 +141,7 @@ namespace UrlShortener.Models
                     ctx.Stats.Add(stat);
 
                     ctx.SaveChanges();
-                    //throw new ShortnrNotFoundException();
+                    
                     return stat;
                 }
             });
