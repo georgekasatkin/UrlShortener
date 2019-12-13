@@ -57,7 +57,7 @@ namespace UrlShortener.Controllers
                 return HttpNotFound();
             }
             string userName = UrlManager.GetUserName();
-            if (userName != url.UserName)
+            if (userName != url.UserName || url.UserName == "AnonimousUser")
             {
                 throw new ArgumentException("Authorization check fail");
             }
