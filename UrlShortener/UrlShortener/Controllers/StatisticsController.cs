@@ -56,21 +56,21 @@ namespace UrlShortener.Controllers
             {
                 return HttpNotFound();
             }
+            string userName = UrlManager.GetUserName();
+            if (userName != url.UserName)
+            {
+                throw new ArgumentException("Authorization check fail");
+            }
             return View(url);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
-        {
-            string userName = UrlManager.GetUserName();
-            ShortUrl url = db.ShortUrls.Where(u => u.Id == id).FirstOrDefault();
-            if (userName != url.UserName)
-                throw new ArgumentException("Authorization check fail");
-
+        {                             
             try
             {
-
+                ShortUrl url = db.ShortUrls.Where(u => u.Id == id).FirstOrDefault();
                 db.ShortUrls.Remove(url);
                 db.SaveChanges();
             }
