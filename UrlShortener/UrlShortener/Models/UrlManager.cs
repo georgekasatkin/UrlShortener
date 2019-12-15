@@ -19,11 +19,13 @@ namespace UrlShortener.Models
 {
     public class UrlManager : IUrlManager
     {
+        public const string defaultUserName = "AnonimousUser";
+
         public static string GetUserName()
         {
             var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
             var name = identity.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Name).Select(c => c.Value).SingleOrDefault();
-            return name ?? "AnonimousUser";
+            return name ?? defaultUserName;
         }
 
         public Task<ShortUrl> ShortenUrl(string longUrl, string ip, string segment = "")

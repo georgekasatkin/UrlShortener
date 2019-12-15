@@ -30,7 +30,7 @@ namespace UrlShortener.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid && model.Email != "AnonimousUser")
+            if (ModelState.IsValid && model.Email != UrlManager.defaultUserName)
             {
                 ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email, Year = model.Year };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
