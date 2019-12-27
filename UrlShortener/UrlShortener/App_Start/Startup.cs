@@ -12,7 +12,7 @@ namespace UrlShortener
     {
         public void Configuration(IAppBuilder app)
         {            
-            app.CreatePerOwinContext<ApplicationContext>(ApplicationContext.Create);
+            app.CreatePerOwinContext<AuthorizationContext>(AuthorizationContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

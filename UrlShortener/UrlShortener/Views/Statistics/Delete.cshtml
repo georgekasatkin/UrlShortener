@@ -12,7 +12,7 @@
 </head>
 <body>
     <div>
-        @model UrlShortener.Entities.ShortUrl
+        @model UrlShortener.Models.ShortUrl
 
         @{
             ViewBag.Title = "Delete";
@@ -39,7 +39,7 @@
                     <td><p>@Html.DisplayFor(model => model.LongUrl)</p></td>
                     <td><p>@Html.DisplayFor(model => model.Segment)</p></td>
                     <td><p>@Html.DisplayFor(model => model.Added)</p></td>
-                    <td  align="center"><p>@Html.DisplayFor(model => model.NumOfClicks)</p></td>
+                    <td align="center"><p>@Html.DisplayFor(model => model.NumOfClicks)</p></td>
                 </tr>
             </table>
 

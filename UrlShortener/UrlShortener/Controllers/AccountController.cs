@@ -12,6 +12,7 @@ using Microsoft.Owin.Security;
 
 namespace UrlShortener.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationUserManager UserManager
@@ -21,12 +22,14 @@ namespace UrlShortener.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
-                
+
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Register(RegisterModel model)
         {
@@ -57,12 +60,14 @@ namespace UrlShortener.Controllers
             }
         }
 
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model, string returnUrl)

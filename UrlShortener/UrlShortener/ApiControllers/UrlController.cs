@@ -1,5 +1,4 @@
-﻿using UrlShortener.Entities;
-using UrlShortener.Models;
+﻿using UrlShortener.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +8,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
-namespace Shortnr.Web.ApiControllers
+namespace UrlShortener.ApiControllers
 {
     [RoutePrefix("api/url")]
     public class UrlController : ApiController
     {
-        private IUrlManager _urlManager;
+        private readonly IUrlManager _urlManager;
 
         public UrlController(IUrlManager urlManager)
         {

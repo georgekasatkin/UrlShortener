@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<UrlShortener.Entities.ShortUrl>
+@model IEnumerable<UrlShortener.Models.ShortUrl>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -24,7 +24,7 @@
                     <td><p>@Html.ActionLink("Number of clicks", "Index", new { sortOrder = ViewBag.ClicksSortParm })</p></td>
                     <td></td>
                 </tr>
-                @foreach (UrlShortener.Entities.ShortUrl s in Model)
+                @foreach (UrlShortener.Models.ShortUrl s in Model)
                 {
                     <tr>
                         <td><p><a href="@s.LongUrl" target="_blank">@s.LongUrl</a></p></td>

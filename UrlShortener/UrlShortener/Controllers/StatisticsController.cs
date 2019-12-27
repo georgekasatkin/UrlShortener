@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using UrlShortener.Data;
 using UrlShortener.Models;
-using UrlShortener.Entities;
 using System.Net;
 
 namespace UrlShortener.Controllers
 {
     public class StatisticsController : Controller
     {
-        private StatisticsContext db = new StatisticsContext();
+        private readonly ShortnrContext _context;
+        public StatisticsController(ShortnrContext context)
+        {
+            _context = context;
+        }
+                
         // GET: Statistics
         [HttpGet]
         public ViewResult Index(string sortOrder)
@@ -21,7 +24,7 @@ namespace UrlShortener.Controllers
             ViewBag.ClicksSortParm = String.IsNullOrEmpty(sortOrder) ? "clicks_asc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            var urls = db.ShortUrls.Select(s => s);
+            var urls = _context.ShortUrls.Select(s => s);
             switch (sortOrder)
             {
                 case "clicks_asc":
@@ -51,13 +54,13 @@ namespace UrlShortener.Controllers
             {
                 ViewBag.ErrorMessage = "Delete failed. Try again, and if the problem persists see your system administrator.";
             }
-            ShortUrl url = db.ShortUrls.Find(id);
+            ShortUrl url = _context.ShortUrls.Find(id);
             if (url == null)
             {
                 return HttpNotFound();
             }
             string userName = UrlManager.GetUserName();
-            if (userName != url.UserName || url.UserName == "AnonimousUser")
+            if (userName != url.UserName || url.UserName == UrlManager.defaultUserName)
             {
                 throw new ArgumentException("Authorization check fail");
             }
@@ -70,9 +73,9 @@ namespace UrlShortener.Controllers
         {                             
             try
             {
-                ShortUrl url = db.ShortUrls.Where(u => u.Id == id).FirstOrDefault();
-                db.ShortUrls.Remove(url);
-                db.SaveChanges();
+                ShortUrl url = _context.ShortUrls.Where(u => u.Id == id).FirstOrDefault();
+                _context.ShortUrls.Remove(url);
+                _context.SaveChanges();
             }
             catch (Exception)
             {
@@ -84,7 +87,7 @@ namespace UrlShortener.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _context.Dispose();
             }
             base.Dispose(disposing);
         }

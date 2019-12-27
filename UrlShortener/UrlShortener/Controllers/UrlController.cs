@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UrlShortener.Models;
-using UrlShortener.Entities;
 using System.Threading.Tasks;
 
 
@@ -12,7 +11,7 @@ namespace UrlShortener.Controllers
 {
     public class UrlController : Controller
     {
-        private IUrlManager _urlManager;
+        private readonly IUrlManager _urlManager;
 
         public UrlController(IUrlManager urlManager)
         {

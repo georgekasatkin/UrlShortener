@@ -5,14 +5,14 @@ namespace UrlShortener.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<UrlShortener.Models.ApplicationContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<UrlShortener.Models.AuthorizationContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(UrlShortener.Models.ApplicationContext context)
+        protected override void Seed(UrlShortener.Models.AuthorizationContext context)
         {
             //  This method will be called after migrating to the latest version.
 

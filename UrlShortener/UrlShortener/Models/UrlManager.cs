@@ -1,7 +1,4 @@
-﻿using UrlShortener.Data;
-using UrlShortener.Entities;
-using UrlShortener.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -20,7 +17,6 @@ namespace UrlShortener.Models
     public class UrlManager : IUrlManager
     {
         public const string defaultUserName = "AnonimousUser";
-
         public static string GetUserName()
         {
             var identity = (System.Security.Claims.ClaimsPrincipal)System.Threading.Thread.CurrentPrincipal;
@@ -64,7 +60,7 @@ namespace UrlShortener.Models
                     }
                     catch (Exception)
                     {
-                        throw new ShortnrNotFoundException();
+                        throw new Exception("Shortener not found");
                         throw;
                     }
 
@@ -82,7 +78,7 @@ namespace UrlShortener.Models
                     {
                         if (ctx.ShortUrls.Where(u => u.Segment == segment).Any())
                         {
-                            throw new ShortnrConflictException();
+                            throw new Exception("ShortnrConflict");
                         }
                         if (segment.Length > 20 || !Regex.IsMatch(segment, @"^[A-Za-z\d_-]+$"))
                         {
@@ -111,9 +107,7 @@ namespace UrlShortener.Models
                     };
 
                     ctx.ShortUrls.Add(url);
-
                     ctx.SaveChanges();
-
                     return url;
                 }
             });
@@ -128,7 +122,7 @@ namespace UrlShortener.Models
                     ShortUrl url = ctx.ShortUrls.Where(u => u.Segment == segment).FirstOrDefault();
                     if (url == null)
                     {
-                        throw new ShortnrNotFoundException();
+                        throw new Exception("ShortnrNotFound");
                     }
 
                     url.NumOfClicks++;
@@ -141,9 +135,7 @@ namespace UrlShortener.Models
                         ShortUrl = url
                     };
                     ctx.Stats.Add(stat);
-
-                    ctx.SaveChanges();
-                    
+                    ctx.SaveChanges();                    
                     return stat;
                 }
             });
