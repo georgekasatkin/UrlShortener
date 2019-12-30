@@ -1,4 +1,6 @@
 Thumbs.db
+*.mdf
+*.ldf
 AssemblyInfo.cs
 .vs/
 *.7z
